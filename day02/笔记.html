@@ -1,0 +1,136 @@
+在stage3上右击新建文件 输入day03/笔记.html可以一步到位
+
+git命令
+  1.查看提交信息
+  git log
+
+  提交信息的方式
+    1）git add 1.txt 2.txt  一次性暂存多个文件  配合git commit -m　＂提交的信息＂使用
+    2）git add -A 一次性暂存工作区所有有修改的文件 配合git commit -m　＂提交的信息＂使用
+    3）git add 目录名 暂存指定目录下所有有修改的文件 配合git commit -m ＂提交的信息＂使用
+    4）git commit -a 跳过暂存区 直接到分支区 但是如果文件没有被git管理 则会显示untracked
+    git rm --cached 1.txt 2.txt 撤销提交的文件
+  
+  git log --pretty=oneline 查看提交信息 主要有id 和 提交时填写的message
+
+  2.取消修改
+    1）取消工作区的修改
+      文件被修改以后还没有执行git add命令
+      git checkout -- 文件名 
+      取消到上一次提交的情况
+    2）取消暂存区的修改
+      文件被修改后执行了git add命令 但是还没有执行git commit命令
+      第一步:先撤销git add命令 git reset HEAD 文件名
+      第二步:再撤销工作区的修改 git checkout -- 文件名
+    3）取消分支上的修改
+      文件被修改后执行了git add 和 git commit命令(已经提交了)
+      无法取消修改
+      使用版本回退
+      首先先使用git log查看每次提交的id 然后确定需要回退到哪个版本
+      再使用 git reset --hard id 
+
+关于HEAD HEAD只有一个
+  就是一个存盘点 实现版本的控制
+  git在每一次提交时 会将每一次的提交串成一条时间线 这条时间线就称为分支
+  默认只有一条分支 master 也称之为主分支
+  而HEAD指向的就是当前分支
+  
+  1）创建分支
+    git branch v1  
+    将当前所在分支复制一条出来 起名为v1
+
+  2）查看当前仓库有哪些分支
+    git branch
+    前面有*号的表示当前所在分支
+
+  3）切换分支
+    git checkout 分支名
+    在一条分支上的修改不会影响到其他分支上的内容
+
+  4）分支的合并
+    git merge 分支名称
+    将指定名称上分支的修改合并到当前分支上
+    在master分支上使用git merge v2 
+    将v2的修改合并到master上 v2的内容不会发生变化 master的内容发生变化
+
+        1)提交master 
+          git checkout master
+          git status 如果显示 working tree clean 即可
+        2)创建v2.1分支 并切换到v2.1分支
+          git branch v2.1 
+          git checkout v2.1
+        3)修改v2.1中2.txt的内容 并暂存提交
+          echo 我修改了2.txt的内容 >> 2.txt 
+          git commit -a 添加message  2.txt的内容被我修改了
+        4)查看提交信息 观察master 和v2.1的位置
+          git log --pretty=oneline 
+          git status 如果工作树干净 切换到master上
+        5)切换到master上,将v2.1的修改合并 再查看提交信息
+          git checkout master 
+          git merge v2.1
+          git log --pretty=oneline 
+        6)查看2.txt的内容有没有变化
+          cat 2.txt 
+  5）分支的删除
+    git branch -d 分支名 
+    删除指定分支
+    如果分支没有被合并 则删除失败 可以强制删除
+    git branch -D 分支名
+
+    不能删除当前所在的分支
+
+github的使用
+  https://github.com
+  1.注册登录  邮箱验证
+  2.创建远程仓库
+    右上角+号位置选择new repository
+    在repository name中填写远程仓库的名称 点击绿色按钮 创建仓库
+  3.选择https模式
+    在git bash 面板中找到对应的文件位置 在命令行中输入
+    git remote add origin 远程仓库地址
+    git remote add origin https://github.com/GMundefined/gloria.git
+    这句命令的作用:添加远程关联
+    git remote 是固定语法 
+    add 添加 
+    origin 别名 指代后面远程仓库的地址
+
+    再运行 git push -u origin master
+    作用:将本地仓库的内容 推送到远程仓库
+    git push 推送
+    -u 第一次推送时添加，之后就不需要了
+      如果没有master分支 就创建
+    origin 别名 指代添加远程关联时的地址
+    master 推送的分支
+
+    然后会弹出 Username for 'https://github.com': 在冒号后面输入自己的账户名GMundefined
+    之后会弹出框 输入密码 即可
+  4）查看当前仓库有哪些远程关联
+    git remote
+  5）删除已经存在的远程关联origin
+    git remote remove origin
+
+  HTTPS和SSH
+    HTTPS每次推送都需要输入用户名和密码
+
+    SSH需要配置秘钥 配置成功后推送就不需要用户名和密码了
+  
+  输入命令
+   ls -a ~/.ssh 查看本机有没有秘钥
+  创建秘钥
+    ssh-keygen -t rsa -C "邮箱地址"
+
+  配置秘钥
+    打开.ssh文件夹中id_rsa.pub的文件 复制其中的内容
+    点击github头像 找到settings 找到右侧SSH And GPGKeys
+      Add SSH
+      Title 随便写
+      将复制的内容粘贴进key
+      点击Add SSH Key 
+    注：本地的.ssh不能删除
+  在git Bash页面 输入  如果原先已经建立过origin 可以选择删除origin或者重新起别名
+    git remote add origin git@github.com:GMundefined/testSSH.git
+    建立远程仓库关联
+    git push -u origin master
+    最后输入yes即可
+
+视图界面工具的使用 GUI
