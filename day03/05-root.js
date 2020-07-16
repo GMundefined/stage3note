@@ -11,9 +11,13 @@ var server=http.createServer(function(req,res){
   fs.readFile('./root.html',function(err,data){
     if(err){//读取出错
       res.end('read file error');
+      return ;//必须加上return 
     }
     //读取成功
+    console.log(data);
+    console.log(data.toString());
     res.end(data);
   });
 });
 server.listen(4000);
+
