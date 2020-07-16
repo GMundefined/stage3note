@@ -134,3 +134,84 @@ github的使用
     最后输入yes即可
 
 视图界面工具的使用 GUI
+在对应的master文件夹打开GUI界面 
+通过rescan 扫描untracked的文件
+如果有的话 会显示到左侧的上方 点击就可以变成staged
+然后那几个按钮来回切换即可 
+点击commit的时候要在右下角的输入框里面输入提交信息
+
+
+合并分支时 相同名字的文件夹发生冲突了怎么办？
+操作:解决文件合并冲突
+    删除master
+    cd /d
+    rm -rf test删除仓库
+    mkdir test 创建
+    cd test
+    git init创建仓库
+    touch 1.txt 创建文件
+    git add -A ->git commit -m "initial" 提交
+    git log
+    git branch v1 -> git branch v2
+    git log
+    git checkout v1
+    ls
+    cat 1.txt
+    echo v1修改了1.txt > 1.txt
+    git commit -a -m "v1的修改"
+    git log
+    git checkout master
+    git merge v1
+    git log
+    git checkout v2
+    cat 1.txt
+    echo v2修改>>1.txt
+    git commit -a -m "v2的修改"
+    git log
+    git status
+    git checkout master
+    git log
+    git merge v2
+    cat 1.txt
+    vi 1.txt回车
+    cat 1.txt
+    git add -A
+    git commit -m "修复合并冲突"
+    git log --pretty=oneline
+
+操作:
+本地仓库连接github
+git remote(显示origin)
+git remote remove origin
+git remote
+git remote add origin git@github.com:queenzx/testSSH.git(github SSH地址)
+git push -u origin master
+Are you sure you want to continue connecting (yes/no)?yes回车
+
+vscode源代码管理
+点击 源代码管理 初始化仓库->路径(选择相对应的路径stage3)回车
+选择test文件夹 ->暂存的更改+ 暂存所有更改
+点击对勾提交输入message(自定义)
+点击...选择推送到->弹框->添加一个新远程->输入远程仓库的名字git@github.com:queenzx/queenzx.github.io
+输入别名page(自定义)
+回到github查看是否上传成功
+头像->Your repositories 点击queenzx.github.io(自己相对应的仓库)查看是否上传成功
+https://queenzx.github.io访问
+    
+
+补充：从github上下载代码
+
+1.clone-->download Zip
+
+2.git clone命令
+ git clone 远程仓库地址
+ 该命令会将制定远程仓库完整的克隆下来 包括历史提交信息
+ 而且还会自动添加远程关联
+
+3.git pull origin master  将远程仓库的master分支上的修改拉取下来
+
+一般情况下 第一次下载时使用git clone 
+以后同步代码时 就只使用git pull(拉取) 和git push(推送)
+    
+    
+    
