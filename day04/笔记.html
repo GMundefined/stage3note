@@ -1,0 +1,43 @@
+fs模块
+  所有的文件系统操作都具有同步和异步的形式。
+
+  同步：有先后顺序的执行某些事情
+  异步：相互之间没有先后顺序，没有关联
+
+  在异步方法中，最后一个参数必定是回调函数 
+  回调函数的第一个参数 必定是err
+  如果该方法需要返回数据 则从第二个参数开始
+
+  1.读取文件内容
+    异步方法:最后参数为回调函数
+  fs.readFile('path',{}/string,function(err,data){
+
+  })
+    同步方法:没有回调函数 但是有返回值
+  var data = fs.readFileSync('path',{})
+
+  2.创建文件夹
+    fs.mkdir(path,{},function(err){})
+
+  3.创建文件
+    fs.writeFile(path,data,{flag:w(默认)/a(追加)},function(err){
+      if(err){
+        
+      }
+    })
+  4.删除文件
+    fs.unlink(path,callback(err){})
+  5.读取文件夹内容
+    fs.readdir(path,function(err,files){})
+
+  6.删除文件夹
+    fs.rmdir  只能删除空文件夹 非空文件夹还不稳定 需要自己封装函数去写
+    等到方法的状态变成绿色就可以用了
+
+练习1
+  访问
+  localhost:4000/regist?username=zhangsan&password=123
+  服务器端接收请求参数 同时在服务器端的user.json文件中保存该数据 
+  数据格式：
+  [{"username":"xxx","password":"xxx"},{},{}]
+  如果user.json不存在 则创建一个新的文件
