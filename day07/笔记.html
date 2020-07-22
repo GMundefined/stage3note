@@ -1,0 +1,61 @@
+Express
+3.路由功能(express-router.js)
+
+fiddler抓包工具 可以看到发送的请求 可以看到数据
+
+一、中间件
+  可以访问req、res对象的函数称为中间件  
+  比如:
+    app.get  处理get请求
+    app.post 处理post请求
+    app.use  处理任意请求方式的请求  所有请求方式 而不是任何的/请求
+  功能：
+    处理请求req和响应res对象
+    返回响应给浏览器 结束请求
+    调用下一个中间件(将请求放行让后续中间件处理)
+
+  get和use的区别 (01-get-use.js)
+    都能处理get请求
+    都忽略大小写 忽略参数 忽略锚点
+    不同点：
+      get是精确匹配
+        get('/a') 只能匹配/a的请求
+      use是模糊匹配
+        use('/a')可以匹配所有以/a请求开头的请求
+        /a /a/b /a/b/c/d/e 这种是可以处理的
+        /ab/b 这种请求是不可以处理的 因为这个是以/ab请求开头的请求
+      
+      app.use('/',function(req,res){
+        <!-- 这种可以处理所有请求 -->
+      })
+      app.use(function(req.res){
+        <!-- 可以简化成这种写法 -->
+      })
+end、send、render的区别
+  end
+    用于快速结束请求 返回响应 如果有返回的数据 可以作为参数传递过去
+    常用于测试，参数类型为string或者buffer
+    如果有中文 则会出现乱码 需要设置消息头
+  
+  send
+    效果与end相似
+    常用于快速结束请求 返回响应 
+    参数类型 string、buffer还可以传array json类型
+    如果数据有中文 会自动设置MIME类型 不会出现乱码情况
+  
+  render
+    渲染返回一个模板视图页面
+    一个有三个参数: 视图名称 json数据 回调函数(err,html)
+    视图名称会自动从views文件夹中查找
+    如果没有回调函数 则直接返回给浏览器
+    如果有回调函数 则将渲染成功的结果赋值给html 
+
+  请求参数的获取：
+      get请求:req.query   补充:req.params.xxx req.params[n] 
+      post请求: 有文件上传 formidable
+      没有文件上传 需要提前设置 app.use(express.urlencoded({extends:true}))
+      版本更新以前用的是bodyparser.urlencoded设置的
+      这句代码就是让req当中生成body属性 body中存放表单提交的信息
+      然后在req.body里面 可以看到表单提交的信息
+      
+      额外的fs模块的method方法：fs-extra  看手册
