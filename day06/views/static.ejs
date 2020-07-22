@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style/index.css">
+  <script src="/script/index.js"></script>
+  <!-- 在node里面 因为没有d盘c盘 所以以/开头的路径就是绝对路径 ./或者不写./的路径才是相对路径 -->
+</head>
+<body>
+<h1>这是一个页面</h1>
+<p>
+  在js中设置了根目录后 <b>app.use(express.static('./public'))</b><br>
+  在ejs模板上引用静态资源文件时，如果使用的是相对路径，则相对的是<b>./public</b>
+  如果使用绝对路径,则/表示的就是<b>public</b>
+</p>
+<img src="./pics/tupian.png" >
+</body>
+</html>

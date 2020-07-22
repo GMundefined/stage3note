@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<h1>视图模板引擎</h1>
+<table>
+  <tr>
+    <td>id</td>
+    <td>name</td>
+  </tr>
+  <% for(var i=0;i < stus.length;i++){ %>
+    <tr>
+      <td><%= stus[i].id %></td>
+      <td><%= stus[i].name %></td>
+    </tr>
+  <% } %>
+</table>
+</body>
+</html>

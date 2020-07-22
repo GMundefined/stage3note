@@ -1,0 +1,3 @@
+node_modules
+# 可以让指定的文件不会被提交到远程仓库
+package-lock.json
