@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>修改商品信息</title>
+</head>
+<body>
+<form action="/update" method="POST">
+<input type="hidden" name="id" value="<%= products._id %>">
+<p>商品编号： <%= products.pid %></p>
+<p>商品名称： <%= products.pname %></p>
+<p>商品价格： <input type="text" name="price" value="<%= products.price %>"></p>
+<p>商品库存： <input type="text" name="count" value="<%= products.count %>"></p>
+<input type="submit" value="确认修改">
+</form>
+</body>
+</html>

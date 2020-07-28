@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>呸商城</title>
+  <style>
+    table,tr,td{
+      border: 1px solid black;
+    } 
+    td{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<h1>商品信息</h1>
+<table cellspacing='0' style="width:75%">
+  <tr>
+    <td>产品编号</td>
+    <td>产品名称</td>
+    <td>单价</td>
+    <td>库存</td>
+    <td colspan="2">操作</td>
+  </tr>
+  <% for(var i=0;i<products.length;i++){ %>
+  <tr>
+    <td><%= products[i].pid %></td>
+    <td><%= products[i].pname %></td>
+    <td><%= products[i].price %></td>
+    <td><%= products[i].count %></td>
+    <td><a href="/update?id=<%= products[i]._id %>">更新</a></td>
+    <td><a href="/delete/<%= products[i]._id %>">下架</a></td>
+  </tr>
+  <% } %>
+</table>
+<a href="/add">进货</a>
+</body>
+</html>

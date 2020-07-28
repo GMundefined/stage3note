@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录页面</title>
+  <style>
+    body{
+      width: 90%;
+    }
+    .p1{
+      float: left;
+      margin-right: 10%;
+    }
+    .p2{
+      float: left;
+    }
+  </style>
+  <script src="/jquery.min.js"></script>
+</head>
+<body>
+<h3>温馨提示：没有做验证 空串也可以提交</h3>
+<p>用户名：<input type="text" name="username"></p>
+<p>密码：<input type="text" name="password"></p>
+
+<p class="p1"><button id="register">还没账号?点击注册</button></p>
+<p  class="p2"><button id="login">登录</button></p>
+
+<script>
+$(function(){
+  $('#register').on('click',function(){
+    location.href='/register'  
+  });
+  $('#login').on('click',function(){
+    $.ajax({
+      url:'/login',
+      method:'post',
+      data:{
+        username:$('input[name=username]').val(),
+        password:$('input[name=password]').val(),
+      },
+      success:function(response){
+        console.log(response)
+        /* if(response=='存储成功'){
+          location.href='/'
+        } */
+      }
+    })
+  })
+
+
+
+
+
+
+
+
+
+
+
+})
+</script>
+</body>
+</html>

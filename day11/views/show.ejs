@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<h1>新增员工</h1>
+<form action="/add" method="POST">
+员工姓名: <input type="text" name="empName"><br>
+员工年龄：<input type="text" name="age"><br>
+入职岗位：<select name="position">
+    <option value="后端开发">后端开发</option>
+    <option value="web开发">web开发</option>
+    <option value="UI设计">UI设计</option>
+</select><br>
+<input type="submit" value="添加">
+</form>
+<hr>
+<h1>员工列表</h1>
+<%if(status==1){%>
+  <h1><%= errMsg %></h1>
+<%}else{%>
+  <table border="1px" cellspacing="0" cellpadding="10" style="text-align: center;">
+    <tr>
+      <td>工号</td>
+      <td>姓名</td>
+      <td>职位</td>
+    </tr>
+    <%for(var i=0;i<docs.length;i++){%>
+      <tr>
+        <td><%= docs[i].id %></td>
+        <td><%= docs[i].name %></td>
+        <td><%= docs[i].position==1?"后端开发":docs[i].position==2?"前端开发":"UI设计" %></td>
+      </tr>
+    <%}%>
+  </table>
+<%}%>
+</body>
+</html>

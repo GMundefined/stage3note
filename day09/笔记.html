@@ -1,0 +1,190 @@
+MEAN全栈开发 A angular不学了 学VUE
+MEVN全栈开发
+前端技术栈：vue2 + vuex + vue-router + webpack + ES6/7 + less + element-ui
+服务端技术栈：nodejs + express + mongodb
+MongoDB  DataBase数据库
+Express  web frame网页框架
+VUE      前端展示
+NODEJS   web server 服务器
+MEVN架构搭建  搭建整个项目的环境
+https://segmentfault.com/a/1190000011038112
+
+
+数据库
+  关系型数据库  
+    oracle mysql sqlserver 
+
+  非关系型数据库   Not Only SQL
+    文档型数据库 MongoDB  服务器端口号27017(默认的)
+
+  对比:
+    关系型数据库中保持的是表格 表格中有行和列 
+      每一行为一条数据 称为记录
+      每一列为一个字段
+
+    非关系型数据库中保持的是集合 集合中保存的是数据,也称为文档
+      保持的数据类型为json格式
+
+MongoDB的使用
+  下载安装
+    官网: https://www.mongodb.com
+  MongoDB Community Server  安装服务器文件
+  MongoDB Conpass           安装可视化工具
+    运行可视化工具 输入mongodb://localhost:27017 点击connect
+    安装成功后 需要配置环境变量
+      右击我的电脑 属性 高级系统设置 环境变量  在用户变量或者系统变量中双击path
+      点击变量值 鼠标光标移动到变量最末端 输入英文状态下的; 然后将安装的mongoDB路径输入进入 C:\Program Files\MongoDB\Server\4.2\bin
+
+  1）MongoDB常用命令
+    1》启动数据库
+      *新版本安装成功后自动启动 不需要手动*
+      *如果需要指定数据保存路径，或者自动启动失败 则手动启动*
+      mongod --dbpath 文件夹路径(系统默认安装时是data文件夹) 
+      mongod --dbpath /d/data 可以修改到d盘的data文件夹(自己指定)
+      打开命令窗口 输入该命令 当发现出现 on port 27017时
+      则说明服务启动成功
+      注意：启动服务的命令窗口不能关闭
+
+    2》连接数据库
+      重新打开一个命令窗口 输入命令 mongo
+      注意：
+        mongod和mongo这两个命令都是在windows(操作系统)的环境下运行的
+        而使用mongo命令连接数据库之后 会进入到mongo的环境
+        此时只能使用mongo的命令
+
+    3》mongo的命令
+      3.1）查看当前数据库服务器上有哪些数据库
+        show dbs
+      3.2）查看当前在哪个数据库
+        db
+      3.3）创建/使用某个数据库
+        use 数据库名
+        如果数据库存在 则进入数据库 开始使用
+        如果数据库不存在 则创建数据库
+        注意：
+          如果是创建数据库 实际上并不会立刻就创建
+          只有当真正的插入数据时 才会创建
+      3.4）插入/添加数据
+        将json文档(数据)插入到集合中
+        db.集合名.insert(json对象)
+        例： 多条数据一次性插入时 分号隔开
+          db.stu.insert({id:1,name:"张三",age:20});
+          db.stu.insert({id:2,name:"李四"});
+          db.stu.insert({id:3,name:"王五",gender:"男"});
+          db.stu.insert({id:4,name:"赵六",age:20,gender:"男"})
+      3.5）查看当前数据库中有哪些集合
+        show collections
+      3.6）查看某个集合中的数据
+        db.集合名.find()  查看数据库中某个集合里面所有的数据
+        db.col.find({}) clo代表集合名 下同
+        小括号中的{}为查询的条件 空对象表示无条件查询 可以省略不写
+        查询年龄为20的人的信息
+        db.stu.find({age:20})
+      3.7）删除数据
+        db.col.remove({})  
+        根据给定的条件删除集合中的某些数据
+        如果参数为空对象 表示无条件删除所有数据 不能省略
+        删除年龄为20的数据
+        db.stu.remove({age:20})  批量删除
+      3.8）修改数据
+        db.col.update({修改的条件},{修改的数据})
+        将id为3的性别修改为女
+        db.stu.update({id:3},{gender:"女"})
+        注意：
+          修改的内容如果直接写数据 则会将原来的数据给全部替换
+          如果要修改某个属性的值 则必须要添加一个$set属性
+          db.stu.update({id:3},{$set:{gender:"女"}})
+        将age为20的人的age修改为21岁
+        db.stu.update({age:20},{$set:{age:21}})
+        只会修改第一个匹配到的数据
+        如果要批量修改 则添加第三个参数
+        db.stu.update({age:21},{$set:{age:22}},{multi:true})
+
+      3.9）删除某个集合
+        db.集合名.drop()
+        db.user.drop()
+      3.10）删除某个数据库
+        db.dropDatabase() 删除当前所在的数据库
+        删除成功后 输入db查询当前所在的数据库 显然的依然是被删除数据库的名称
+        相当于刚连接数据库use之后 还没有向数据库中添加数据的状态
+    =====================================================================
+    练习
+      从连接数据库开始
+        1.连接数据库 查看当前服务器上有哪些数据库 mongo    show dbs
+        2.进入到web数据库 查看当前数据库中有哪些集合 use web  show collections
+        3.向集合user中添加四条数据
+          db.user.insert({username:"test1",password:"123",age:10,gender:"M"});
+          db.user.insert({username:"test2",password:"abc",age:12,gender:"F"});
+          db.user.insert({username:"test3",password:"123abc",age:10,gender:"F"});
+          db.user.insert({username:"test4",password:"abc123",age:13,gender:"M"});
+        4.查看user集合中的所有数据
+          db.user.find()
+        5.查看年龄为10岁的所有数据
+          db.user.find({age:10})
+        6.删除test4的数据
+          db.user.remove({username:"test4"})
+        7.将test1的密码修改为"aaa"
+          db.user.update({username:"test1"},{$set:{password:"aaa"}})
+        8.将gender为F的人的性别修改为女
+          db.user.update({gender:"F"},{$set:{gender:"女"}},{multi:true})
+    ====================================================================
+    4》从外部导入数据
+      mongoimport 命令 该命令也是在windows(操作系统)环境下执行的
+      mongoimport -d 数据库名称 -c 集合名称 json文件路径
+
+      如果导入时 数据库不存在 则自动创建对应名称的数据库和集合
+      mongoimport -d web -c emp 可以直接选择文件直接往cmd命令行拖会自动生成
+
+  2）MongoDB的几种条件
+    1》相等条件
+      $eq : equal 
+      查询年龄为20岁的信息
+      db.col.find({age:20})
+      db.col.find({age:{$eq:20}})
+    2》大于/大于等于
+      $gt : greater than 
+      $gte : greater than or equal
+      查询年龄大于20岁的信息
+      db.col.find({age:{$gt:20}})
+    3》小于/小于等于
+      $lt : less than 
+      $lte : less than or equal
+      查询年龄小于等于20岁的信息
+      db.col.find({age:{$lte:20}})
+      db.emp.find({age:{$lte:20}})
+    4》不相等
+      $ne : not equal 
+    
+  3)逻辑关系
+    1》与
+      $and 并且
+      查询年龄小于20岁 并且性别是女的学生信息
+      db.col.find({age:{$lt:20},sex:"F"})
+      db.emp.find({$and:[{age:{$gt:20}},{sex:"F"}]})
+      年龄在20到40之间
+      db.emp.find({$and:[{age:{$gt:20}},{age:{$lt:40}}]})
+    2》或
+      $or 或者
+      数组中的条件只要满足其中一个即可
+      {$or:[{age:{$lt:20}},{sex:"F"}]}
+    3》非
+      $not 取反
+      年龄为20的不要
+      db.col.find({age:{$not:{$eq:20}}})
+    4》既不也不
+      $nor
+      {$nor:[{表达式},{},{}]}
+
+    db.emp.find({name:{$regex:/三/}})
+      
+增：
+{
+  name:"王磊",
+  age:30,
+  likes:['爬山','烧烤'],
+  score:{html:'78',css:'69',js:'80'}
+}
+删：姓名为赵六的数据
+改：把张三的年龄修改为35岁
+
+具体看testmomgo.js 
