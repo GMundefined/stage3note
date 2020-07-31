@@ -27,12 +27,15 @@
       <td>工号</td>
       <td>姓名</td>
       <td>职位</td>
+      <td colspan="2">操作</td>
     </tr>
     <%for(var i=0;i<docs.length;i++){%>
       <tr>
         <td><%= docs[i].id %></td>
         <td><%= docs[i].name %></td>
         <td><%= docs[i].position==1?"后端开发":docs[i].position==2?"前端开发":"UI设计" %></td>
+        <td><a href="">更新</a></td>
+        <td><a href="">删除</a></td>
       </tr>
     <%}%>
   </table>
